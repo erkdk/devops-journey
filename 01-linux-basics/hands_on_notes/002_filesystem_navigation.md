@@ -11,19 +11,19 @@
  /var
  /etc
 ```
-- What type of data is stored here?
+##### What type of data is stored here?
 Answer:
 
-- /
+- /\
 	--> root of the entire filesystem (everything starts here)
 
-- /home
+- /home\
 	--> user data, user home directories (eg. /home/erkdk) 
 
-- /var
+- /var\
 	--> runtime, variable data (changes frequently), contains: logs(/var/logs), packages(/var/lib), cache(/var/cache)
 
-- /etc
+- /etc\
 	--> system-wide configuration files
 
 ---
@@ -44,7 +44,7 @@ erkdk@my-lab:/$ sudo du -h /var | sort -h | tail -3
 erkdk@my-lab:~$ sudo du -sh /var/* sort -h
 ```
 ---
-4. Create:  ~/lab1/test.txt  &  Write something into it	 &  Copy it to: /var/tmp/  &  Verify it exists there
+4. Create:  ``~/lab1/test.txt``   &   Write something into it	 &   Copy it to: /var/tmp/   &   Verify it exists there
 ```
 erkdk@my-lab:~$ mkdir -p lab1 && touch lab1/test.txt		(create)
 
@@ -119,6 +119,8 @@ erkdk@my-lab:~$ sudo find -type f -size +50M			(only files)
 8. Find all files owned by your user
 ```
 erkdk@my-lab:~$ sudo find / -type f -user $USER
+
+or
 
 erkdk@my-lab:~$ find /home /var/tmp/ -type f -user $USER
 ```
