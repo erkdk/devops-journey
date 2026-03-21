@@ -188,11 +188,11 @@ erkdk@my-lab:~$ ps -o pid,ni,stat,comm -p 2380
     PID  NI STAT COMMAND
    2380  10 SN   sleep
 ```
-- What changed?
+- What changed?\
 ---> NI(Nice Value) = 10 and STAT = SN (sleep) so allows other high priority process to run and itself get low priority 
 (note: nice value range -19(high priority) to 20(low priotiry))
 
-- Why is this important?
+- Why is this important?\
 ---> because ``nice`` affects CPU Scheduling priority (higher nice, less CPU share and lower nice, more CPU share).
 
 ---
