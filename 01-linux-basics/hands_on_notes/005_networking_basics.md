@@ -15,7 +15,7 @@ erkdk@my-lab:~$ ip a
        valid_lft forever preferred_lft forever
 2: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
     link/ether 52:54:00:86:bc:78 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.100.87/24 metric 100 brd 192.168.100.255 scope global dynamic enp1s0
+    inet 192.168.200.88/24 metric 100 brd 192.168.100.255 scope global dynamic enp1s0
        valid_lft 2610sec preferred_lft 2610sec
     inet6 fe80::5054:ff:fe86:bc78/64 scope link 
        valid_lft forever preferred_lft forever
@@ -23,14 +23,14 @@ erkdk@my-lab:~$
 ```
 ```
 erkdk@my-lab:~$ ip route
-default via 192.168.100.1 dev enp1s0 proto dhcp src 192.168.100.87 metric 100 
-192.168.100.0/24 dev enp1s0 proto kernel scope link src 192.168.100.87 metric 100 
-192.168.100.1 dev enp1s0 proto dhcp scope link src 192.168.100.87 metric 100 
+default via 192.168.200.2 dev enp1s0 proto dhcp src 192.168.200.88 metric 100 
+192.168.200.0/24 dev enp1s0 proto kernel scope link src 192.168.200.88 metric 100 
+192.168.200.2 dev enp1s0 proto dhcp scope link src 192.168.200.88 metric 100 
 ```
 - ``lo``: loopback used for internal connection, IPC
 - ``enp1s0``(Network interface name): ethernet interface
-- IP address: ``192.168.100.87``
-- Default gateway: `` 192.168.100.1``
+- IP address: ``192.168.200.88``
+- Default gateway: `` 192.168.200.2``
 
 ---
 2. DNS configuration ( Find: Which DNS server you are using)
@@ -43,34 +43,34 @@ Global
 Link 2 (enp1s0)
     Current Scopes: DNS
          Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
-Current DNS Server: 192.168.100.1
-       DNS Servers: 192.168.100.1
+Current DNS Server: 192.168.200.2
+       DNS Servers: 192.168.200.2
 erkdk@my-lab:~$ 
 ```
-- DNS server: ``192.168.100.1``
+- DNS server: ``192.168.200.2``
 
 ---
 3. Connectivity test ( Test: Ping your host machine, Ping public IP (8.8.8.8), Ping domain (google.com) )
 ```
-erkdk@my-lab:~$ ping -c 4 192.168.100.87			(IP of current vm itself)
-PING 192.168.100.87 (192.168.100.87) 56(84) bytes of data.
-64 bytes from 192.168.100.87: icmp_seq=1 ttl=64 time=0.073 ms
-64 bytes from 192.168.100.87: icmp_seq=2 ttl=64 time=0.048 ms
-64 bytes from 192.168.100.87: icmp_seq=3 ttl=64 time=0.044 ms
-64 bytes from 192.168.100.87: icmp_seq=4 ttl=64 time=0.043 ms
+erkdk@my-lab:~$ ping -c 4 192.168.200.88			(IP of current vm itself)
+PING 192.168.200.88 (192.168.200.88) 56(84) bytes of data.
+64 bytes from 192.168.200.88: icmp_seq=1 ttl=64 time=0.073 ms
+64 bytes from 192.168.200.88: icmp_seq=2 ttl=64 time=0.048 ms
+64 bytes from 192.168.200.88: icmp_seq=3 ttl=64 time=0.044 ms
+64 bytes from 192.168.200.88: icmp_seq=4 ttl=64 time=0.043 ms
 
---- 192.168.100.87 ping statistics ---
+--- 192.168.200.88 ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 3104ms
 rtt min/avg/max/mdev = 0.043/0.052/0.073/0.012 ms
 
-erkdk@my-lab:~$ ping -c 4 192.168.100.1					(host-machine)
-PING 192.168.100.1 (192.168.100.1) 56(84) bytes of data.
-64 bytes from 192.168.100.1: icmp_seq=1 ttl=64 time=0.227 ms
-64 bytes from 192.168.100.1: icmp_seq=2 ttl=64 time=0.386 ms
-64 bytes from 192.168.100.1: icmp_seq=3 ttl=64 time=0.479 ms
-64 bytes from 192.168.100.1: icmp_seq=4 ttl=64 time=0.322 ms
+erkdk@my-lab:~$ ping -c 4 192.168.200.2					(host-machine)
+PING 192.168.200.2 (192.168.200.2) 56(84) bytes of data.
+64 bytes from 192.168.200.2: icmp_seq=1 ttl=64 time=0.227 ms
+64 bytes from 192.168.200.2: icmp_seq=2 ttl=64 time=0.386 ms
+64 bytes from 192.168.200.2: icmp_seq=3 ttl=64 time=0.479 ms
+64 bytes from 192.168.200.2: icmp_seq=4 ttl=64 time=0.322 ms
 
---- 192.168.100.1 ping statistics ---
+--- 192.168.200.2 ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 3091ms
 rtt min/avg/max/mdev = 0.227/0.353/0.479/0.091 ms
 
@@ -139,7 +139,7 @@ erkdk@my-lab:~$ python3 -m http.server 8080
 Serving HTTP on 0.0.0.0 port 8080 (http://0.0.0.0:8080/) ...
 
 (after curl from browser and host machine)
-aadarkdk@pop-os:~$ curl -I http://192.168.100.87:8080
+aadarkdk@pop-os:~$ curl -I http://192.168.200.88:8080
 HTTP/1.0 200 OK
 Server: SimpleHTTP/0.6 Python/3.12.3
 Date: Mon, 23 Mar 2026 02:53:36 GMT
@@ -148,8 +148,8 @@ Content-Length: 778
 
 erkdk@my-lab:~$ python3 -m http.server 8080
 Serving HTTP on 0.0.0.0 port 8080 (http://0.0.0.0:8080/) ...
-192.168.100.1 - - [23/Mar/2026 02:47:52] "GET / HTTP/1.1" 200 -
-192.168.100.1 - - [23/Mar/2026 02:53:36] "HEAD / HTTP/1.1" 200 -
+192.168.200.2 - - [23/Mar/2026 02:47:52] "GET / HTTP/1.1" 200 -
+192.168.200.2 - - [23/Mar/2026 02:53:36] "HEAD / HTTP/1.1" 200 -
 ```
 - ``0.0.0.0`` - listens on all interfaces (here ``lo``(internal loopback) and ``enp1s0``(external)
 
