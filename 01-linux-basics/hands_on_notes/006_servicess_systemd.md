@@ -1,6 +1,7 @@
 ### Services & systemd
 - Scenario:
-“A critical service is down. Users cannot access the application.” & “If this breaks in production, how do I debug?”
+  “A critical service is down. Users cannot access the application.”<br>
+  “If this breaks in production, how do I debug?”
 
 ---
 1. List all services (``systemctl list-units --type=service``)
